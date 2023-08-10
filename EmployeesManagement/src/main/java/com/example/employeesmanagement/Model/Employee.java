@@ -41,7 +41,7 @@ public class Employee {
     private Date employmentYear;
 
     @NotNull(message = "annual leave should not be empty")
-    @PositiveOrZero(message = "annual leave should be number")
+    @PositiveOrZero(message = "annual leave should be positive number")
     private int annualLeave;
 
 }

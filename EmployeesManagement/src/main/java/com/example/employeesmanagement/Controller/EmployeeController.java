@@ -51,18 +51,16 @@ public class EmployeeController {
     }
 
 
-    @PutMapping("/applyLeave/{index}/{leaveDays}")
-    public ResponseEntity applyAnnualLeave(@PathVariable int index, @PathVariable int leaveDays) {
+    @PutMapping("/applyLeave/{index}")
+    public ResponseEntity applyAnnualLeave(@PathVariable int index) {
         if (employees.get(index).isOnLeave()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse("the employee is already on leave"));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse("the employee is already applied for annual leave"));
         }else if (employees.get(index).getAnnualLeave() == 0) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse("the employee consumed all annual leave days"));
-        } else if (employees.get(index).getAnnualLeave() < leaveDays) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse("the employee does not have enough annual leave"));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse("the employee consumed all annual leaves"));
         }
 
         employees.get(index).setOnLeave(true);
-        employees.get(index).setAnnualLeave(employees.get(index).getAnnualLeave() - leaveDays);
-        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("applied"));
+        employees.get(index).setAnnualLeave(employees.get(index).getAnnualLeave() - 1);
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("applied successfully"));
     }
 }
